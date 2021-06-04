@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 //Using CORS policy
-// const cors = require("cors");
+
 // const corsOptions = {
 //   origin: "http://localhost:3000",
 //   credentials: true,
@@ -13,6 +14,8 @@ const mongoose = require("mongoose");
 // };
 // app.use(cors(corsOptions));
 
+// const bodyParser = require("body-parser");
+// var jsonParser = bodyParser.json();
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
@@ -28,8 +31,11 @@ app.use((req, res, next) => {
   next();
 });
 
-const mongoDB = `mongodb+srv://SahyogAdmin:${process.env.DB_PASSWORD}@sahyog.upfyh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// Using Node.js `require()`FOR mongoDB
 
+// configure mongoDB
+const mongoDB = `mongodb+srv://SahyogAdmin:${process.env.DB_PASSWORD}@sahyog.upfyh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+//connect local database
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Database Connected..."))
@@ -43,7 +49,7 @@ mongoose.set("useCreateIndex", true);
 const Room = require("./models/Room");
 
 //post request to join room
-app.post("/join_room", jsonParser, async (req, res) => {
+app.post("/join_room", async (req, res) => {
   // console.log('req reciveed', req.body);
 
   //check if the room which this exist or not
