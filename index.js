@@ -27,11 +27,9 @@ app.use((req, res, next) => {
 
   next();
 });
-// Using Node.js `require()`FOR mongoDB
 
-// configure mongoDB
 const mongoDB = `mongodb+srv://SahyogAdmin:${process.env.DB_PASSWORD}@sahyog.upfyh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-//connect local database
+
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Database Connected..."))
