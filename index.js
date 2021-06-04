@@ -2,21 +2,33 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
+const mongoose = require("mongoose");
 
 //Using CORS policy
-const cors = require("cors");
-const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// const cors = require("cors");
+// const corsOptions = {
+//   origin: "http://localhost:3000",
+//   credentials: true,
+//   optionSuccessStatus: 200,
+// };
+// app.use(cors(corsOptions));
 
-const bodyParser = require("body-parser");
-var jsonParser = bodyParser.json();
+app.use(express.json({ limit: "30mb", extended: true }));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
+});
 // Using Node.js `require()`FOR mongoDB
-const mongoose = require("mongoose");
+
 // configure mongoDB
 const mongoDB = `mongodb+srv://SahyogAdmin:${process.env.DB_PASSWORD}@sahyog.upfyh.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 //connect local database
