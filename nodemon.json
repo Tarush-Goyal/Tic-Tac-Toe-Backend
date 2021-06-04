@@ -1,0 +1,8 @@
+{
+  "env": {
+    "DB_USER": "SahyogAdmin",
+    "DB_PASSWORD": "3wDezU0CHVapQUVv",
+    "DB_NAME": "Sahyog",
+    "JWT_KEY": "supersecret_dont_share"
+  }
+}
