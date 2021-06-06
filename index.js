@@ -47,7 +47,6 @@ app.post("/join_room", async (req, res) => {
 
       res.status(200).json({ doc });
     } else {
-      //Room is full
       res.status(200).json({ err: "Room is Full can't join " });
     }
   } else {
